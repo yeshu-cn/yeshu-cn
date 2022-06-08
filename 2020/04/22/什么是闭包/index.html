@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yeshu.work","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="定义  闭包就是能够读取其他函数内部变量的函数。例如在javascript中，只有函数内部的子函数才能读取局部变量，所以闭包可以理解成“定义在一个函数内部的函数“。  两个概念  自变量 自由变量  javascript的闭包 function Add(y) &amp;#123;    return function(x) &amp;#123;        return x + y    &amp;#125;&amp;#125">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么是闭包">
+<meta property="og:url" content="http://yeshu.work/2020/04/22/%E4%BB%80%E4%B9%88%E6%98%AF%E9%97%AD%E5%8C%85/index.html">
+<meta property="og:site_name" content="yeshu blog">
+<meta property="og:description" content="定义  闭包就是能够读取其他函数内部变量的函数。例如在javascript中，只有函数内部的子函数才能读取局部变量，所以闭包可以理解成“定义在一个函数内部的函数“。  两个概念  自变量 自由变量  javascript的闭包 function Add(y) &amp;#123;    return function(x) &amp;#123;        return x + y    &amp;#125;&amp;#125">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-04-22T02:40:36.000Z">
+<meta property="article:modified_time" content="2022-06-07T10:53:41.449Z">
+<meta property="article:author" content="yeshu">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yeshu.work/2020/04/22/%E4%BB%80%E4%B9%88%E6%98%AF%E9%97%AD%E5%8C%85/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'default'
+  };
+</script>
+
+  <title>什么是闭包 | yeshu blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">yeshu blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="default">
+    <link itemprop="mainEntityOfPage" href="http://yeshu.work/2020/04/22/%E4%BB%80%E4%B9%88%E6%98%AF%E9%97%AD%E5%8C%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeshu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yeshu blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          什么是闭包
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-22 10:40:36" itemprop="dateCreated datePublished" datetime="2020-04-22T10:40:36+08:00">2020-04-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-06-07 18:53:41" itemprop="dateModified" datetime="2022-06-07T18:53:41+08:00">2022-06-07</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>定义</p>
+<blockquote>
+<p>闭包就是能够读取其他函数内部变量的函数。例如在javascript中，只有函数内部的子函数才能读取局部变量，所以闭包可以理解成“定义在一个函数内部的函数“。</p>
+</blockquote>
+<p>两个概念</p>
+<ul>
+<li>自变量</li>
+<li>自由变量</li>
+</ul>
+<p>javascript的闭包</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Add</span>(<span class="params">y</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> x + y</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中x是自变量，y是自由变量</p>
+<p>java中的闭包</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bindViewHolder</span><span class="params">(View view, find <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">    view.setOnClickListener(<span class="keyword">new</span> OnClickListener &#123;</span><br><span class="line">        <span class="comment">// 这里使用了外部的position自由变量，就是闭包</span></span><br><span class="line">        Item item = list.get(position)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;    </span><br></pre></td></tr></table></figure>
+
+
+<h2 id="java为什么匿名内部类的参数引用时final？"><a href="#java为什么匿名内部类的参数引用时final？" class="headerlink" title="java为什么匿名内部类的参数引用时final？"></a>java为什么匿名内部类的参数引用时final？</h2><p>内部类可以通过外部类的引用拿到外部类自由变量的值，但是没法通过引用获取函数参数，函数成员等这些自由变量。<br>所以Java编译器把这些<strong>自由变量</strong>的值偷偷拷贝了一份放在了内部类中。<br>所以为了保持两个成员的值一致，Java就用final规定这个值不能改变。</p>
+<p>这是java特有的，其他的语言不会这样，其他的语言会依然对象的传递引用进入内部类</p>
+<p>这些变量的生命周期：</p>
+<blockquote>
+<p>因为每个内部类的实例都隐藏了一个指向外部类实例的引用。java只是没有显式地写出来而已。内部类访问外部类成员都是透过这个引用。之所以能有这个引用，是因为两者都是实例，都有自己的内存空间。而匿名内部类的外围环境函数只是一个函数，执行完之后，也就是匿名内部类诞生（初始化）完成的那一刻，它的生存周期就结束了。函数内部的局部变量（包括函数的参数）也就跟着被销毁了。所以产生出来的内部类根本无法像保留外部类的引用那样保留外围环境函数的引用。所以只能退而求其次，只保留一份局部变量的拷贝值。</p>
+</blockquote>
+<blockquote>
+<p>一个函数的成员变量在函数执行完之后必须销毁，是因为执行函数的内存开销是在栈上。每执行一个函数，都会在栈上压一个新的栈帧，函数的局部变量，包括参数都存在这个栈帧的局部变量表里。函数执行完之后，根据栈的LIFO顺序，当前栈帧就被从栈上弹出销毁。内存上就没有这个函数的痕迹了。</p>
+</blockquote>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><p>闭包（计算机科学）是什么？<br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/24084277/answer/110176733">https://www.zhihu.com/question/24084277/answer/110176733</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/21395848">https://www.zhihu.com/question/21395848</a></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/21/ViewPager%E4%B8%ADfragment%E6%BB%91%E5%8A%A8%E4%BA%8B%E4%BB%B6%E6%97%A0%E6%95%88%E5%88%86%E6%9E%90/" rel="prev" title="ViewPager中fragment滑动事件无效分析">
+      <i class="fa fa-chevron-left"></i> ViewPager中fragment滑动事件无效分析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/28/Google-play%E4%BD%BF%E7%94%A8%E6%95%8F%E6%84%9F%E6%9D%83%E9%99%90%E6%97%A0%E6%B3%95%E4%B8%8A%E6%9E%B6%EF%BC%8C%E6%95%8F%E6%84%9F%E6%9D%83%E9%99%90%E6%8E%92%E6%9F%A5%E6%96%B9%E6%B3%95/" rel="next" title="Google play使用敏感权限无法上架，敏感权限排查方法">
+      Google play使用敏感权限无法上架，敏感权限排查方法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#java%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB%E7%9A%84%E5%8F%82%E6%95%B0%E5%BC%95%E7%94%A8%E6%97%B6final%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">java为什么匿名内部类的参数引用时final？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeshu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">138</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yeshu-cn" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yeshu-cn" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeshu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

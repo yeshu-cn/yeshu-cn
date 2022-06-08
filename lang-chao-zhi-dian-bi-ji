@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yeshu.work","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="有幸见证历史 近一百多年来，总有一些公司很幸运地、有意无意的站在技术革命的浪尖之上。一旦处在了那个位置，即使不做任何事，也可以随着波浪顺顺当当地向前漂十年，甚至更长的时间。在这十几年到几十年间，它们代表着科技的浪潮，直到下一波浪潮的来临。 ##帝国的余晖–AT&amp;T公司 我认为其中一个原因是反垄断法逼着公司追究技术进步。当一个公司开始垄断一个行业时，它会更多地倾向于利用自己的垄断资源，而不是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浪潮之巅笔记">
+<meta property="og:url" content="http://yeshu.work/lang-chao-zhi-dian-bi-ji">
+<meta property="og:site_name" content="yeshu blog">
+<meta property="og:description" content="有幸见证历史 近一百多年来，总有一些公司很幸运地、有意无意的站在技术革命的浪尖之上。一旦处在了那个位置，即使不做任何事，也可以随着波浪顺顺当当地向前漂十年，甚至更长的时间。在这十几年到几十年间，它们代表着科技的浪潮，直到下一波浪潮的来临。 ##帝国的余晖–AT&amp;T公司 我认为其中一个原因是反垄断法逼着公司追究技术进步。当一个公司开始垄断一个行业时，它会更多地倾向于利用自己的垄断资源，而不是">
+<meta property="og:locale">
+<meta property="article:published_time" content="2015-06-29T18:17:33.000Z">
+<meta property="article:modified_time" content="2015-06-29T18:19:19.000Z">
+<meta property="article:author" content="yeshu">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yeshu.work/lang-chao-zhi-dian-bi-ji">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'default'
+  };
+</script>
+
+  <title>浪潮之巅笔记 | yeshu blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">yeshu blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="default">
+    <link itemprop="mainEntityOfPage" href="http://yeshu.work/lang-chao-zhi-dian-bi-ji">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeshu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yeshu blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浪潮之巅笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2015-06-30 02:17:33 / Modified: 02:19:19" itemprop="dateCreated datePublished" datetime="2015-06-30T02:17:33+08:00">2015-06-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>有幸见证历史</p>
+<p>近一百多年来，总有一些公司很幸运地、有意无意的站在技术革命的浪尖之上。一旦处在了那个位置，即使不做任何事，也可以随着波浪顺顺当当地向前漂十年，甚至更长的时间。在这十几年到几十年间，它们代表着科技的浪潮，直到下一波浪潮的来临。</p>
+<p>##帝国的余晖–AT&amp;T公司</p>
+<p>我认为其中一个原因是反垄断法逼着公司追究技术进步。当一个公司开始垄断一个行业时，它会更多地倾向于利用自己的垄断资源，而不是靠技术进步获取更多利润，毕竟前者比后者容易得多。</p>
+<p>投资大师沃伦巴菲特在谈到上个世纪初他父亲失败的投资时讲，那时有很多汽车公司，大家不知道投哪个好，但是有一点投资者应该看到，马车工业要完蛋了。</p>
+<p>###相关事物<br>电话、贝尔实验室、Unix操作系统、C语言</p>
+<p>##蓝色巨人–IBM公司<br>命运</p>
+<ul>
+<li>赶上机械革命的最后一次浪潮</li>
+<li>领导点子技术革命的浪潮</li>
+<li>错过全球信息化的大潮（公司基因，反垄断，微软三个因素造成失败）</li>
+<li>Louis Gerstner（郭士纳）带领IBM改革，确立自身为一个服务型的技术公司，并将用户定位在企业级，而放弃了自己并不在行的终端消费者市场。</li>
+<li>保守的创新者</li>
+</ul>
+<p>将计算机从政府部门和军方推广到民间，将它的功能由科学计算变成商用。</p>
+<p>如果苹果公司失败了，IBM无需做任何事情。如果前者失败了，IBM依靠它强大的技术储备完全可以后发制人。</p>
+<p>IBM在和苹果的竞争中真可谓后发制人（观望了4年）。直到今天，IBM-PC还是个人电脑的代名词。<br>###相关事物</p>
+<ul>
+<li>最大的服务公司</li>
+<li>第二大软件公司</li>
+<li>第二大数据库公司</li>
+<li>当今工业界最大的实验室IBM Research</li>
+<li>第一的专业申请大户</li>
+<li>最大的开源Linux服务器生产商</li>
+</ul>
+<p>##“水果”公司的复兴–乔布斯和苹果公司<br>大多数产品经理之所以做不出改变世界的产品，是因为他们只看见了成功者最后的临门一脚，而忽视了别人的长期思考。</p>
+<p>苹果公司的兴衰和其创始人的沉浮完全重合。</p>
+<p>##计算机工业的生态链<br>IT:Information Technologies<br>IT定律：IT Laws</p>
+<p>摩尔定律：Moore’s Law<br>安迪-比尔定律: Andy and Bill’s Law<br>反摩尔定律: Reverse Moore’s Law</p>
+<p>###安迪-比尔定律（是什么促使人们不断地主动更新自己的硬件）<br>IT界把它总结成安迪-比尔定律，即比尔要拿走安迪所给的（what andy gives, bill takes away.）<br>安迪：原英特尔公司CEO安迪格罗夫（Andy Grove）<br>比尔：微软公司创始人比尔盖茨</p>
+<p>比尔拿走安迪所给的原因:都是程序员的过。以前都是汇编写程序，精打细算。现在程序员们为了工作效率占用了更多的硬件资源。</p>
+<p>在IT领域，各个硬件厂商恰恰是靠软件开发商用光自己提供的硬件资源得以生存。（微软Vista迟迟不能面世导致英特尔等硬件厂商股票下跌）</p>
+<p>如果微软的开发速度比预期的慢，软件的业绩不好，那么就一定不能买英特尔等公司的股票了。</p>
+<p>人们把这个时期的PC产业的格局描述成WinTel,即Windows加上Intel。</p>
+<p>安迪-比尔定律把原本属于耐用消费品的电脑、手机等商品变成了消耗性的商品，刺激着整个IT行业的发展。</p>
+<p>###摩尔定律<br>提出者：英特尔公司的创始人戈登摩尔（Gordon Moore）<br>内容：每18个月，计算机等IT产品的性能会翻一番；或者说相同性能的计算机等IT产品，每18个月价钱会降一半。<br>摩尔定律主导者IT行业的发展</p>
+<ul>
+<li>首先，为了是摩尔定律成立，IT公司必须在比较短的时间内完成下一代产品的开发。</li>
+<li>其次，由于有了强力的硬件支持，以前想都不敢想的应用会不断涌现。</li>
+<li>第三，摩尔定律使得各个公司现在研发必须针对多年后的市场。（根据摩尔定律，预研产品）</li>
+</ul>
+<p>###反摩尔定律<br>提出者：Google CEO 埃里克施密特（Eric schmidt）<br>内容：如果你反过来看摩尔定律，一个IT公司如果今天和18个月前卖掉同样多的、同样的产品，它的营业额就要降一半。</p>
+<p>反摩尔定律逼着所有硬件设备公司必须赶上摩尔定律规定的更新速度。</p>
+<p>反摩尔定律，它促成科技领域质的进步，并为新兴公司提供生存和发展的可能。</p>
+<p>为了赶上反摩尔定律预测的发展速度，光靠量变是不够的。每一种技术，过不了多少年，量变的潜力就会被挖光，这时就必须要革命性的创造发明诞生</p>
+<p>在科技进步量变的过程中，新的小公司是无法和老的大公司竞争的，因为后者在老的技术方面拥有无与伦比的优势。但是，在抓住质变的机遇上，有些小公司会做的比大公司更好而后来居上，因为他们没有包袱，也比大公司灵活。</p>
+<p>大公司除了要保持很高的研发投入，还要时刻注意周围和自身相关的新技术的发展，经常收购有革命性新技术的小公司。</p>
+<p>因此，从事IT业，想要获得高额利润，就得从上游入手。</p>
+<p>###总结</p>
+<ul>
+<li>首先，程序员每个18个月会开发出占用资源更大的程序，促使摩尔定律的生成</li>
+<li>然后，用户想用新程序，促使各个硬件厂家配合摩尔定律研发新的硬件</li>
+<li>最后，如果不随大流，不迎合摩尔定律的厂家会被用户淘汰。</li>
+<li>看来都是程序员惹得</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/zero-to-one-yue-du-bi-ji" rel="prev" title="《ZERO to ONE》阅读笔记">
+      <i class="fa fa-chevron-left"></i> 《ZERO to ONE》阅读笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/lang-chao-zhi-dian-bi-ji-er" rel="next" title="浪潮之巅笔记（二）">
+      浪潮之巅笔记（二） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeshu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">138</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yeshu-cn" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yeshu-cn" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeshu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

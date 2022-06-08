@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yeshu.work","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="学习一些命名规则 程序设计方式  ##功能特征  进行http请求，以回调的方式处理返回 非UI线程进行网络请求 使用线程池处理并发的资源请求 GET&#x2F;POST请求参数化 文件分段上传 体积小，90kb 自动重试机制 自动对gizp进行解码 使用JsonHttpResponseHandler解析为json格式response 使用FileAsyncHttpResponseHandler">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android-async-http源码分析">
+<meta property="og:url" content="http://yeshu.work/android-async-httpyuan-ma-fen-xi">
+<meta property="og:site_name" content="yeshu blog">
+<meta property="og:description" content="学习一些命名规则 程序设计方式  ##功能特征  进行http请求，以回调的方式处理返回 非UI线程进行网络请求 使用线程池处理并发的资源请求 GET&#x2F;POST请求参数化 文件分段上传 体积小，90kb 自动重试机制 自动对gizp进行解码 使用JsonHttpResponseHandler解析为json格式response 使用FileAsyncHttpResponseHandler">
+<meta property="og:locale">
+<meta property="article:published_time" content="2015-09-09T01:25:36.000Z">
+<meta property="article:modified_time" content="2015-09-09T01:27:08.000Z">
+<meta property="article:author" content="yeshu">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yeshu.work/android-async-httpyuan-ma-fen-xi">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'default'
+  };
+</script>
+
+  <title>android-async-http源码分析 | yeshu blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">yeshu blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="default">
+    <link itemprop="mainEntityOfPage" href="http://yeshu.work/android-async-httpyuan-ma-fen-xi">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeshu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yeshu blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          android-async-http源码分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2015-09-09 09:25:36 / Modified: 09:27:08" itemprop="dateCreated datePublished" datetime="2015-09-09T09:25:36+08:00">2015-09-09</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li>学习一些命名规则</li>
+<li>程序设计方式</li>
+</ul>
+<p>##功能特征</p>
+<ul>
+<li>进行http请求，以回调的方式处理返回</li>
+<li>非UI线程进行网络请求</li>
+<li>使用线程池处理并发的资源请求</li>
+<li>GET&#x2F;POST请求参数化</li>
+<li>文件分段上传</li>
+<li>体积小，90kb</li>
+<li>自动重试机制</li>
+<li>自动对gizp进行解码</li>
+<li>使用<code>JsonHttpResponseHandler</code>解析为json格式response</li>
+<li>使用<code>FileAsyncHttpResponseHandler</code>保存response为文件</li>
+<li>支持cookie存储，存储在SharedPreferences中</li>
+<li><code>BaseJsonHttpResponseHandler </code>中集成jackson、Gson等库</li>
+<li>支持编码设置，不仅仅<code>UTF-8</code></li>
+</ul>
+<p>##使用</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">AsyncHttpClient client = <span class="keyword">new</span> AsyncHttpClient();</span><br><span class="line">client.get(<span class="string">&quot;https://www.google.com&quot;</span>, <span class="keyword">new</span> AsyncHttpResponseHandler() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// called before request is started</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(<span class="keyword">int</span> statusCode, Header[] headers, <span class="keyword">byte</span>[] response)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// called when response HTTP status is &quot;200 OK&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(<span class="keyword">int</span> statusCode, Header[] headers, <span class="keyword">byte</span>[] errorResponse, Throwable e)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// called when response HTTP status is &quot;4XX&quot; (eg. 401, 403, 404)</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRetry</span><span class="params">(<span class="keyword">int</span> retryNo)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// called when request is retried</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>推荐编码方式</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.loopj.android.http.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TwitterRestClient</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String BASE_URL = <span class="string">&quot;https://api.twitter.com/1/&quot;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> AsyncHttpClient client = <span class="keyword">new</span> AsyncHttpClient();</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">get</span><span class="params">(String url, RequestParams params, AsyncHttpResponseHandler responseHandler)</span> </span>&#123;</span><br><span class="line">      client.get(getAbsoluteUrl(url), params, responseHandler);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">post</span><span class="params">(String url, RequestParams params, AsyncHttpResponseHandler responseHandler)</span> </span>&#123;</span><br><span class="line">      client.post(getAbsoluteUrl(url), params, responseHandler);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">getAbsoluteUrl</span><span class="params">(String relativeUrl)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> BASE_URL + relativeUrl;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>PersistentCookieStore </code>持久化Cookies<br>使用<code>RequestParams </code>添加GET&#x2F;POST请求参数<br>使用<code>RequestParams </code>上传文件<br>使用<code>FileAsyncHttpResponseHandler </code>下载二进制数据</p>
+<p>##命名</p>
+<ul>
+<li>FileWrapper</li>
+<li>StreamWrapper</li>
+<li>makeRequest()；</li>
+<li>makeRequestWithRetries()；</li>
+</ul>
+<p>##如何实现重试机制</p>
+<p><code>RetryHandler</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">makeRequest()</span><br><span class="line">makeRequestWithRetries()</span><br><span class="line"></span><br><span class="line"><span class="comment">//重试次数和重试间隔时间</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> maxRetries;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> retrySleepTimeMS;</span><br><span class="line">   </span><br><span class="line">   <span class="comment">//出发重试时的场景</span></span><br><span class="line">   <span class="keyword">static</span> &#123;</span><br><span class="line">       <span class="comment">// Retry if the server dropped connection on us</span></span><br><span class="line">       exceptionWhitelist.add(NoHttpResponseException.class);</span><br><span class="line">       <span class="comment">// retry-this, since it may happens as part of a Wi-Fi to 3G failover</span></span><br><span class="line">       exceptionWhitelist.add(UnknownHostException.class);</span><br><span class="line">       <span class="comment">// retry-this, since it may happens as part of a Wi-Fi to 3G failover</span></span><br><span class="line">       exceptionWhitelist.add(SocketException.class);</span><br><span class="line"></span><br><span class="line">       <span class="comment">// never retry timeouts</span></span><br><span class="line">       exceptionBlacklist.add(InterruptedIOException.class);</span><br><span class="line">       <span class="comment">// never retry SSL handshake failures</span></span><br><span class="line">       exceptionBlacklist.add(SSLException.class);</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="comment">//请求重试</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">retryRequest</span><span class="params">(IOException exception, <span class="keyword">int</span> executionCount, HttpContext context)</span>；</span></span><br><span class="line"><span class="function">   </span></span><br><span class="line"><span class="function">   <span class="title">if</span> <span class="params">(retry)</span> </span>&#123;</span><br><span class="line">           <span class="comment">// resend all idempotent requests</span></span><br><span class="line">           HttpUriRequest currentReq = (HttpUriRequest) context.getAttribute(ExecutionContext.HTTP_REQUEST);</span><br><span class="line">           <span class="keyword">if</span> (currentReq == <span class="keyword">null</span>) &#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>##如何实现解析回调</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ResponseHandlerInterface</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//内部存在一个Handler用于发送处理消息</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AsyncHttpResponseHandler</span> <span class="keyword">implements</span> <span class="title">ResponseHandlerInterface</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">TextHttpResponseHandler</span> <span class="keyword">extends</span> <span class="title">AsyncHttpResponseHandelr</span></span>&#123;&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BinaryHttpResponseHandler</span> <span class="keyword">extends</span> <span class="title">AsyncHttpResonseHandler</span></span>&#123;&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">FileAsyncHttpResponseHandler</span> <span class="keyword">extends</span> <span class="title">AsyncHttpResponseHandler</span></span>&#123;&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">DataAsyncHttpResponseHandler</span> <span class="keyword">extends</span> <span class="title">AsyncHttpResponseHandler</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JsonHttpResponseHandler</span> <span class="keyword">extends</span> <span class="title">TextHttpResponseHandler</span></span>&#123;&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseJsonHttpResponseHandler</span>&lt;<span class="title">JSON_TYPE</span>&gt; <span class="keyword">extends</span> <span class="title">TextHttpResponseHandler</span></span>&#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>###AsyncHttpResponseHandler构造函数</p>
+<ul>
+<li>没有传入参数<code>Looper</code>则获取当前线程的<code>Looper</code>。一般使用情况下即为UI线程</li>
+<li>创建一个静态内部类<code>ResponseHandler</code>与此<code>Looper</code>关联，并将消息委托给<code>AsyncHttpResponseHandler</code>实例的<code>handleMessage</code>函数来处理</li>
+</ul>
+<p>##如何管理网络请求</p>
+<ul>
+<li>AsyncHttpRequest：异步网络请求</li>
+<li>RequestHandle: 控制异步网络请求的取消和运行</li>
+<li>通过标志位判断和取消网络请求</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">AsyncHttpRequest request = <span class="keyword">new</span> AsyncHttpRequest(client, httpContext, uriRequest, contentType, responseHandler, context);</span><br><span class="line">        threadPool.submit(request);</span><br></pre></td></tr></table></figure>
+
+<p>##异步方式下的网络请求数据流程</p>
+<ul>
+<li><code>AsyncHttpRequest</code>是一个线程，加入线程池，执行<code>run()</code>方法进行网络请求</li>
+<li>执行完毕后，回调成员变量<code>TextHttpResponseHandler</code>的<code>onSuccess()</code>方法将返回数据交由其处理</li>
+<li><code>TextHttpResponseHandler </code>（及其子类）获取数据进行解析加工</li>
+</ul>
+<p>##线程池如何处理的</p>
+<p><code>AsyncHttpClient</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">private</span> ExecutorService threadPool;</span><br><span class="line"></span><br><span class="line">threadPool = Executors.newCachedThreadPool();</span><br><span class="line"></span><br><span class="line">AsyncHttpRequest request = <span class="keyword">new</span> AsyncHttpRequest(client, httpContext, uriRequest, contentType, responseHandler, context);</span><br><span class="line"></span><br><span class="line">threadPool.submit(request);</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/httpsliu-cheng" rel="prev" title="https通信流程">
+      <i class="fa fa-chevron-left"></i> https通信流程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/cy" rel="next" title="C语言数组退化为指针">
+      C语言数组退化为指针 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeshu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">138</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yeshu-cn" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yeshu-cn" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeshu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

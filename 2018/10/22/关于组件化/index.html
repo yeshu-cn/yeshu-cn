@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yeshu.work","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="#关于组件化 定义 模块化：指业务功能代码的职责单一，解耦合，易维护，扩展。 组件化：将原项目中子业务代码，拆分为可复用，可独立立项的项目。  我的流程 先做好基础的代码模块化 https:&#x2F;&#x2F;five.agency&#x2F;android-architecture-part-2-clean-architecture&#x2F; 参考这片文章的思想、模块划分，写出好模块化代码 再做好组件化 根据实际的业务需求，将其">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于组件化">
+<meta property="og:url" content="http://yeshu.work/2018/10/22/%E5%85%B3%E4%BA%8E%E7%BB%84%E4%BB%B6%E5%8C%96/index.html">
+<meta property="og:site_name" content="yeshu blog">
+<meta property="og:description" content="#关于组件化 定义 模块化：指业务功能代码的职责单一，解耦合，易维护，扩展。 组件化：将原项目中子业务代码，拆分为可复用，可独立立项的项目。  我的流程 先做好基础的代码模块化 https:&#x2F;&#x2F;five.agency&#x2F;android-architecture-part-2-clean-architecture&#x2F; 参考这片文章的思想、模块划分，写出好模块化代码 再做好组件化 根据实际的业务需求，将其">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-10-22T07:12:47.000Z">
+<meta property="article:modified_time" content="2022-06-07T10:53:41.450Z">
+<meta property="article:author" content="yeshu">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yeshu.work/2018/10/22/%E5%85%B3%E4%BA%8E%E7%BB%84%E4%BB%B6%E5%8C%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'default'
+  };
+</script>
+
+  <title>关于组件化 | yeshu blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">yeshu blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="default">
+    <link itemprop="mainEntityOfPage" href="http://yeshu.work/2018/10/22/%E5%85%B3%E4%BA%8E%E7%BB%84%E4%BB%B6%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeshu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yeshu blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          关于组件化
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-10-22 15:12:47" itemprop="dateCreated datePublished" datetime="2018-10-22T15:12:47+08:00">2018-10-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-06-07 18:53:41" itemprop="dateModified" datetime="2022-06-07T18:53:41+08:00">2022-06-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index"><span itemprop="name">架构设计</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>#关于组件化</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ol>
+<li>模块化：指业务功能代码的职责单一，解耦合，易维护，扩展。</li>
+<li>组件化：将原项目中子业务代码，拆分为可复用，可独立立项的项目。</li>
+</ol>
+<h2 id="我的流程"><a href="#我的流程" class="headerlink" title="我的流程"></a>我的流程</h2><ol>
+<li>先做好基础的代码模块化<br> <a target="_blank" rel="noopener" href="https://five.agency/android-architecture-part-2-clean-architecture/">https://five.agency/android-architecture-part-2-clean-architecture/</a> 参考这片文章的思想、模块划分，写出好模块化代码</li>
+<li>再做好组件化<br> 根据实际的业务需求，将其中的代码提取出来，“组件化”为可以编译，复用的子项目。</li>
+</ol>
+<h2 id="很多网上“组件化”文章犯了两个错误"><a href="#很多网上“组件化”文章犯了两个错误" class="headerlink" title="很多网上“组件化”文章犯了两个错误"></a>很多网上“组件化”文章犯了两个错误</h2><ol>
+<li>没有理解第一条，全篇都只是在处理第二条</li>
+<li>第二条工作中过度设计，将所有的业务都“组件化”为单独的子项目。而为了实现这一目标，给项目增加了很多额外的技术债务和复杂度</li>
+</ol>
+<p>例如：<a target="_blank" rel="noopener" href="https://juejin.im/entry/5bc7f791f265da0a8d36c1fb">https://juejin.im/entry/5bc7f791f265da0a8d36c1fb</a></p>
+<ol>
+<li>组件化的核心是代码的模块化，代码模块化的核心是遵循程序设计的七大原则，写出好的代码。而本文对此基本没有描述，全篇只是讲代码文件放在哪里好，怎么实现所有子业务可独立编译的框架。</li>
+<li>该方案中共用代码，初始化，gradle编译关系的处理。都是为了实现所谓的“组件化”而增加的技术债务，相比原生的程序开发流程，并没有简化代码，提高性能，增加可读性。反而更加复杂化</li>
+<li>知乎有业务需要独立编译运行的需求吗？如果没有，那将所有业务都设计成能直接编译运行就属于过度设计。</li>
+</ol>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><blockquote>
+<p>有些人吵着闹着要让程序“模块化”，结果他们的做法是把代码分部到多个文件和目录里面，然后把这些目录或者文件叫做“module”。他们甚至把这些目录分放在不同的VCS repo里面。结果这样的作法并没有带来合作的流畅，而是带来了许多的麻烦。这是因为他们其实并不理解什么叫做“模块”，肤浅的把代码切割开来，分放在不同的位置，其实非但不能达到模块化的目的，而且制造了不必要的麻烦。</p>
+<p>真正的模块化，并不是文本意义上的，而是逻辑意义上的。一个模块应该像一个电路芯片，它有定义良好的输入和输出。实际上一种很好的模块化方法早已经存在，它的名字叫做“函数”。每一个函数都有明确的输入（参数）和输出（返回值），同一个文件里可以包含多个函数，所以你其实根本不需要把代码分开在多个文件或者目录里面，同样可以完成代码的模块化。我可以把代码全都写在同一个文件里，却仍然是非常模块化的代码。</p>
+</blockquote>
+<p>from:<a target="_blank" rel="noopener" href="http://www.yinwang.org/blog-cn/2015/11/21/programming-philosophy">http://www.yinwang.org/blog-cn/2015/11/21/programming-philosophy</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/09/07/Web-Api-and-Repository/" rel="prev" title="Web Api and Repository">
+      <i class="fa fa-chevron-left"></i> Web Api and Repository
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/03/25/Android%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E8%BF%AD%E4%BB%A3/" rel="next" title="Android项目架构迭代">
+      Android项目架构迭代 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">我的流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%88%E5%A4%9A%E7%BD%91%E4%B8%8A%E2%80%9C%E7%BB%84%E4%BB%B6%E5%8C%96%E2%80%9D%E6%96%87%E7%AB%A0%E7%8A%AF%E4%BA%86%E4%B8%A4%E4%B8%AA%E9%94%99%E8%AF%AF"><span class="nav-number">3.</span> <span class="nav-text">很多网上“组件化”文章犯了两个错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%90%8E"><span class="nav-number">4.</span> <span class="nav-text">最后</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeshu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">138</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yeshu-cn" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yeshu-cn" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeshu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yeshu.work","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="正确使用Fragment如果系统重建Fragment会调用不带参数都构造函数，所以想要恢复保存参数需要使用setArguments方法设置参数Bundle。在Fragment重建时Bundle会自动保存下来。 public static MyFragment newInstance() &amp;#123;    Bundle args &#x3D; new Bundle();        MyFragment">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fragment使用中的常见异常">
+<meta property="og:url" content="http://yeshu.work/2017/09/05/Fragment%E4%BD%BF%E7%94%A8%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="yeshu blog">
+<meta property="og:description" content="正确使用Fragment如果系统重建Fragment会调用不带参数都构造函数，所以想要恢复保存参数需要使用setArguments方法设置参数Bundle。在Fragment重建时Bundle会自动保存下来。 public static MyFragment newInstance() &amp;#123;    Bundle args &#x3D; new Bundle();        MyFragment">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-09-05T03:21:00.000Z">
+<meta property="article:modified_time" content="2022-06-07T10:53:41.438Z">
+<meta property="article:author" content="yeshu">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yeshu.work/2017/09/05/Fragment%E4%BD%BF%E7%94%A8%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'default'
+  };
+</script>
+
+  <title>Fragment使用中的常见异常 | yeshu blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">yeshu blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="default">
+    <link itemprop="mainEntityOfPage" href="http://yeshu.work/2017/09/05/Fragment%E4%BD%BF%E7%94%A8%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeshu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yeshu blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Fragment使用中的常见异常
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-09-05 11:21:00" itemprop="dateCreated datePublished" datetime="2017-09-05T11:21:00+08:00">2017-09-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-06-07 18:53:41" itemprop="dateModified" datetime="2022-06-07T18:53:41+08:00">2022-06-07</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="正确使用Fragment"><a href="#正确使用Fragment" class="headerlink" title="正确使用Fragment"></a>正确使用Fragment</h2><p>如果系统重建Fragment会调用不带参数都构造函数，所以想要恢复保存参数需要使用<code>setArguments</code>方法设置参数<code>Bundle</code>。在Fragment重建时<code>Bundle</code>会自动保存下来。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public static MyFragment newInstance() &#123;</span><br><span class="line">    Bundle args = new Bundle();</span><br><span class="line">    </span><br><span class="line">    MyFragment fragment = new MyFragment();</span><br><span class="line">    fragment.setArguments(args);</span><br><span class="line">    return fragment;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void onCreate() &#123;</span><br><span class="line">	Bundle args = getArguments();</span><br><span class="line">	//...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> inflater.inflate(R.layout.fragement, container, <span class="keyword">false</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><code>inflate(@LayoutRes int resource, @Nullable ViewGroup root, boolean attachToRoot)</code>参数说明：</p>
+<ol>
+<li>root不为null, attachToRoot为true时，将生成的View添加到root中</li>
+<li>root不为null, attachToRoot为false时，生成一个带params的View</li>
+<li>root为null, attachToroot为false时, 生成一个不带params的View</li>
+</ol>
+<p><strong>Fragment和Activity的数据交互</strong></p>
+<p>为了解耦合,保持Fragment的独立性</p>
+<ol>
+<li>Activity可以直接调用Fragment的public方法</li>
+<li>Fragment通过callback通知Activity</li>
+</ol>
+<h2 id="使用getChildFragmentManager时的”no-activity”异常"><a href="#使用getChildFragmentManager时的”no-activity”异常" class="headerlink" title="使用getChildFragmentManager时的”no activity”异常"></a>使用getChildFragmentManager时的”no activity”异常</h2><p>触发流程</p>
+<ol>
+<li>使用Fragment.getChildFragmentManager</li>
+<li>Fragment重复使用，再次attatch</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">java.lang.IllegalStateException: No activity</span><br><span class="line">	at android.app.FragmentManagerImpl.moveToState(FragmentManager.java:1060)</span><br><span class="line">	at android.app.FragmentManagerImpl.moveToState(FragmentManager.java:1055)</span><br><span class="line">	at android.app.FragmentManagerImpl.dispatchActivityCreated(FragmentManager.java:1864)</span><br><span class="line">	at android.app.Fragment.performActivityCreated(Fragment.java:1714)</span><br><span class="line">	at android.app.FragmentManagerImpl.moveToState(FragmentManager.java:919)</span><br><span class="line">	at android.app.FragmentManagerImpl.moveToState(FragmentManager.java:1073)</span><br><span class="line">	at android.app.BackStackRecord.run(BackStackRecord.java:698)</span><br><span class="line">	at android.app.FragmentManagerImpl.execPendingActions(FragmentManager.java:1458)</span><br><span class="line">	at android.app.FragmentManagerImpl$1.run(FragmentManager.java:443)</span><br><span class="line">	at android.os.Handler.handleCallback(Handler.java:808)</span><br><span class="line">	at android.os.Handler.dispatchMessage(Handler.java:103)</span><br><span class="line">	at android.os.Looper.loop(Looper.java:193)</span><br><span class="line">	at android.app.ActivityThread.main(ActivityThread.java:5332)</span><br><span class="line">	at java.lang.reflect.Method.invokeNative(Native Method)</span><br><span class="line">	at java.lang.reflect.Method.invoke(Method.java:515)</span><br><span class="line">	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:829)</span><br><span class="line">	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:645)</span><br><span class="line">	at dalvik.system.NativeStart.main(Native Method)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Fragment destory时会将mChildFragmentManager.mHost重置为null</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">performDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mChildFragmentManager != <span class="keyword">null</span>) &#123;</span><br><span class="line">        mChildFragmentManager.dispatchDestroy();</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dispatchDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    moveToState(Fragment.INITIALIZING, <span class="keyword">false</span>);</span><br><span class="line">    mHost = <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>导致Fragment再次attach时 mChildFragmentManager.mHost &#x3D; null</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dispatchActivityCreated</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    mStateSaved = <span class="keyword">false</span>;</span><br><span class="line">    moveToState(Fragment.ACTIVITY_CREATED, <span class="keyword">false</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">moveToState</span><span class="params">(<span class="keyword">int</span> newState, <span class="keyword">int</span> transit, <span class="keyword">int</span> transitStyle, <span class="keyword">boolean</span> always)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mHost == <span class="keyword">null</span> &amp;&amp; newState != Fragment.INITIALIZING) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">&quot;No activity&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   	<span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Fragment attach时mChildFragmentManager !&#x3D; null</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">public</span> FragmentManager <span class="title">getChildFragmentManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mChildFragmentManager == <span class="keyword">null</span>) &#123;</span><br><span class="line">        instantiateChildFragmentManager();</span><br><span class="line">			<span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> mChildFragmentManager;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">instantiateChildFragmentManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    mChildFragmentManager = <span class="keyword">new</span> FragmentManagerImpl();</span><br><span class="line">    mChildFragmentManager.attachController(mHost, <span class="keyword">new</span> FragmentContainer() &#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;, <span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<p>解决方法就是在Fragment desotry时，将其FragmentManager也设置为null</p>
+<p>参考资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://issuetracker.google.com/issues/36963722">https://issuetracker.google.com/issues/36963722</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/27980543/viewpager-on-dialogfragment-java-lang-illegalstateexception-no-activity">https://stackoverflow.com/questions/27980543/viewpager-on-dialogfragment-java-lang-illegalstateexception-no-activity</a></li>
+</ul>
+<h2 id="Fragment-detach后使用mHost报错"><a href="#Fragment-detach后使用mHost报错" class="headerlink" title="Fragment detach后使用mHost报错"></a>Fragment detach后使用mHost报错</h2><p>只能在attached Activity之前调用，所以，在实例化对象后立刻调用</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setArguments</span><span class="params">(Bundle args)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (mIndex &gt; <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">&quot;Fragment already active&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	mArguments = args;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Fragment detache了后调用getResources()会报错</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">public</span> Resources <span class="title">getResources</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mHost == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">&quot;Fragment &quot;</span> + <span class="keyword">this</span> + <span class="string">&quot; not attached to Activity&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> mHost.getContext().getResources();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Fragment-重影问题"><a href="#Fragment-重影问题" class="headerlink" title="Fragment 重影问题"></a>Fragment 重影问题</h2><p><strong>问题原因</strong></p>
+<p>Activity因为内存不足悲销毁重建时，其中Fragment也会被销毁重建。如果此时Activity onCreate中addFragment多次，就会造成重影问题</p>
+<p><strong>模拟系统销毁Activity的方法</strong></p>
+<p>手机的 “设置” - “开发者选项” - 打开”不保留活动”</p>
+<h2 id="BackStackRecored-不能commit多次"><a href="#BackStackRecored-不能commit多次" class="headerlink" title="BackStackRecored 不能commit多次"></a>BackStackRecored 不能commit多次</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">commitInternal</span><span class="params">(<span class="keyword">boolean</span> allowStateLoss)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mCommitted) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">&quot;commit already called&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (FragmentManagerImpl.DEBUG) &#123;</span><br><span class="line">        Log.v(TAG, <span class="string">&quot;Commit: &quot;</span> + <span class="keyword">this</span>);</span><br><span class="line">        LogWriter logw = <span class="keyword">new</span> LogWriter(Log.VERBOSE, TAG);</span><br><span class="line">        PrintWriter pw = <span class="keyword">new</span> FastPrintWriter(logw, <span class="keyword">false</span>, <span class="number">1024</span>);</span><br><span class="line">        dump(<span class="string">&quot;  &quot;</span>, <span class="keyword">null</span>, pw, <span class="keyword">null</span>);</span><br><span class="line">        pw.flush();</span><br><span class="line">    &#125;</span><br><span class="line">    mCommitted = <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (mAddToBackStack) &#123;</span><br><span class="line">        mIndex = mManager.allocBackStackIndex(<span class="keyword">this</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        mIndex = -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    mManager.enqueueAction(<span class="keyword">this</span>, allowStateLoss);</span><br><span class="line">    <span class="keyword">return</span> mIndex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Fragment重复使用错误"><a href="#Fragment重复使用错误" class="headerlink" title="Fragment重复使用错误"></a>Fragment重复使用错误</h2><ol>
+<li>Fragment不能同时加到两个不同的containerView中</li>
+<li>Fragment不能同时add两个不同的tag</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doAddOp</span><span class="params">(<span class="keyword">int</span> containerViewId, Fragment fragment, String tag, <span class="keyword">int</span> opcmd)</span> </span>&#123;</span><br><span class="line">    fragment.mFragmentManager = mManager;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (tag != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (fragment.mTag != <span class="keyword">null</span> &amp;&amp; !tag.equals(fragment.mTag)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">&quot;Can&#x27;t change tag of fragment &quot;</span></span><br><span class="line">                    + fragment + <span class="string">&quot;: was &quot;</span> + fragment.mTag</span><br><span class="line">                    + <span class="string">&quot; now &quot;</span> + tag);</span><br><span class="line">        &#125;</span><br><span class="line">        fragment.mTag = tag;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (containerViewId != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (fragment.mFragmentId != <span class="number">0</span> &amp;&amp; fragment.mFragmentId != containerViewId) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">&quot;Can&#x27;t change container ID of fragment &quot;</span></span><br><span class="line">                    + fragment + <span class="string">&quot;: was &quot;</span> + fragment.mFragmentId</span><br><span class="line">                    + <span class="string">&quot; now &quot;</span> + containerViewId);</span><br><span class="line">        &#125;</span><br><span class="line">        fragment.mContainerId = fragment.mFragmentId = containerViewId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Op op = <span class="keyword">new</span> Op();</span><br><span class="line">    op.cmd = opcmd;</span><br><span class="line">    op.fragment = fragment;</span><br><span class="line">    addOp(op);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="源码阅读"><a href="#源码阅读" class="headerlink" title="源码阅读"></a>源码阅读</h2><p><strong>主要成员</strong></p>
+<ul>
+<li><p>Activity</p>
+<pre><code>  final Handler mHandler = new Handler();
+  //即FragmentManager
+     final FragmentController mFragments = FragmentController.createController(new HostCallbacks());
+  
+</code></pre>
+</li>
+<li><p>Fragment</p>
+<pre><code>   里面有个ChildFragmentManager
+</code></pre>
+</li>
+<li><p>FragmentManager</p>
+<pre><code>  具体实现类是FragmentManagerImpl，有个moveToState()方法，用于切换状态，回调Fragment中的相关声明周期
+</code></pre>
+</li>
+<li><p>BackStackRecord</p>
+<pre><code>  就是FragmentTransaction，里面包含一个用于保存add,replace,commit等操作的双向链表，是一个runable。
+  commit是通过mFragmentManager中的mHandler来执行这个BackStackRecord runnable.
+</code></pre>
+</li>
+</ul>
+<p><strong>参考资料</strong>  </p>
+<ul>
+<li>moveToState函数，Fragment生命周期函数调用解释（<a target="_blank" rel="noopener" href="http://www.jianshu.com/p/c8391673babe%EF%BC%89">http://www.jianshu.com/p/c8391673babe）</a></li>
+<li>比较全面的源码解析（<a target="_blank" rel="noopener" href="http://www.jianshu.com/p/bd4a8be309c8%EF%BC%89">http://www.jianshu.com/p/bd4a8be309c8）</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/04/27/PopupWindow/" rel="prev" title="PopupWindow">
+      <i class="fa fa-chevron-left"></i> PopupWindow
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/10/11/SeeBar%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F%E7%AC%94%E8%AE%B0/" rel="next" title="SeeBar自定义样式笔记">
+      SeeBar自定义样式笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8Fragment"><span class="nav-number">1.</span> <span class="nav-text">正确使用Fragment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8getChildFragmentManager%E6%97%B6%E7%9A%84%E2%80%9Dno-activity%E2%80%9D%E5%BC%82%E5%B8%B8"><span class="nav-number">2.</span> <span class="nav-text">使用getChildFragmentManager时的”no activity”异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fragment-detach%E5%90%8E%E4%BD%BF%E7%94%A8mHost%E6%8A%A5%E9%94%99"><span class="nav-number">3.</span> <span class="nav-text">Fragment detach后使用mHost报错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fragment-%E9%87%8D%E5%BD%B1%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">Fragment 重影问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BackStackRecored-%E4%B8%8D%E8%83%BDcommit%E5%A4%9A%E6%AC%A1"><span class="nav-number">5.</span> <span class="nav-text">BackStackRecored 不能commit多次</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fragment%E9%87%8D%E5%A4%8D%E4%BD%BF%E7%94%A8%E9%94%99%E8%AF%AF"><span class="nav-number">6.</span> <span class="nav-text">Fragment重复使用错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB"><span class="nav-number">7.</span> <span class="nav-text">源码阅读</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeshu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">138</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yeshu-cn" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yeshu-cn" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeshu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

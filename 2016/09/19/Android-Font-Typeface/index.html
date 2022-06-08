@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yeshu.work","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Android 官方Typeface：Droid sans, Droid Sans Mono, Droid Serif, Default sans TextStyle: normal, bload, italic 常用Spannable类字体颜色：ForegroundColorSpan 字体背景颜色：BackgroundColorSpan 字体大小：AbsoluteSizeSpan 粗体，斜体：S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Font Typeface">
+<meta property="og:url" content="http://yeshu.work/2016/09/19/Android-Font-Typeface/index.html">
+<meta property="og:site_name" content="yeshu blog">
+<meta property="og:description" content="Android 官方Typeface：Droid sans, Droid Sans Mono, Droid Serif, Default sans TextStyle: normal, bload, italic 常用Spannable类字体颜色：ForegroundColorSpan 字体背景颜色：BackgroundColorSpan 字体大小：AbsoluteSizeSpan 粗体，斜体：S">
+<meta property="og:locale">
+<meta property="article:published_time" content="2016-09-19T09:00:23.000Z">
+<meta property="article:modified_time" content="2022-06-07T10:53:41.435Z">
+<meta property="article:author" content="yeshu">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yeshu.work/2016/09/19/Android-Font-Typeface/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'default'
+  };
+</script>
+
+  <title>Android Font Typeface | yeshu blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">yeshu blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="default">
+    <link itemprop="mainEntityOfPage" href="http://yeshu.work/2016/09/19/Android-Font-Typeface/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yeshu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yeshu blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android Font Typeface
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-19 17:00:23" itemprop="dateCreated datePublished" datetime="2016-09-19T17:00:23+08:00">2016-09-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-06-07 18:53:41" itemprop="dateModified" datetime="2022-06-07T18:53:41+08:00">2022-06-07</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Android 官方Typeface：Droid sans, Droid Sans Mono, Droid Serif, Default sans</p>
+<p>TextStyle: normal, bload, italic</p>
+<h5 id="常用Spannable类"><a href="#常用Spannable类" class="headerlink" title="常用Spannable类"></a>常用Spannable类</h5><pre><code>字体颜色：ForegroundColorSpan
+字体背景颜色：BackgroundColorSpan
+字体大小：AbsoluteSizeSpan
+粗体，斜体：StyleSpan
+删除线：StrikeThroughSpan
+下划线：UnderlineSpan
+图片：ImageSpan
+字体：TypefaceSpan
+自定义字体：class CustomTypefaceSpan extends TypefaceSpan
+</code></pre>
+<p>使用方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">SpannableString spanString = <span class="keyword">new</span> SpannableString(<span class="string">&quot;xxxxx&quot;</span>);    </span><br><span class="line">StyleSpan span = <span class="keyword">new</span> StyleSpan(Typeface.BOLD_ITALIC);    </span><br><span class="line">spanString.setSpan(span, <span class="number">1</span>, <span class="number">3</span>, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);    </span><br><span class="line">textView.setText(spanString);   </span><br></pre></td></tr></table></figure>
+
+
+<h5 id="setTypeface设置自定义字体"><a href="#setTypeface设置自定义字体" class="headerlink" title="setTypeface设置自定义字体"></a><code>setTypeface</code>设置自定义字体</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">TextView txt = (TextView) findViewById(R.id.custom_font);</span><br><span class="line">Typeface font = Typeface.createFromAsset(getAssets(), <span class="string">&quot;Chantelli_Antiqua.ttf&quot;</span>);</span><br><span class="line">txt.setTypeface(font);</span><br></pre></td></tr></table></figure>
+
+<h5 id="CustomeTypefaceSpan设置自定义字体"><a href="#CustomeTypefaceSpan设置自定义字体" class="headerlink" title="CustomeTypefaceSpan设置自定义字体"></a><code>CustomeTypefaceSpan</code>设置自定义字体</h5><p>使用</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Typeface typeface = Typeface.createFromAsset(getAssets(), <span class="string">&quot;Akshar.ttf&quot;</span>);</span><br><span class="line">SpannableString str = <span class="keyword">new</span> SpannableString(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">str.setSpan(<span class="keyword">new</span> CustomTypefaceSpan(<span class="string">&quot;&quot;</span>, typeface), <span class="number">0</span>, string.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br></pre></td></tr></table></figure>
+
+<p>CustomeTypefaceSpan.java</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomTypefaceSpan</span> <span class="keyword">extends</span> <span class="title">TypefaceSpan</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Typeface newType;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">CustomTypefaceSpan</span><span class="params">(String family, Typeface type)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(family);</span><br><span class="line">    newType = type;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateDrawState</span><span class="params">(TextPaint ds)</span> </span>&#123;</span><br><span class="line">    applyCustomTypeFace(ds, newType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateMeasureState</span><span class="params">(TextPaint paint)</span> </span>&#123;</span><br><span class="line">    applyCustomTypeFace(paint, newType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">applyCustomTypeFace</span><span class="params">(Paint paint, Typeface tf)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> oldStyle;</span><br><span class="line">    Typeface old = paint.getTypeface();</span><br><span class="line">    <span class="keyword">if</span> (old == <span class="keyword">null</span>) &#123;</span><br><span class="line">        oldStyle = <span class="number">0</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        oldStyle = old.getStyle();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> fake = oldStyle &amp; ~tf.getStyle();</span><br><span class="line">    <span class="keyword">if</span> ((fake &amp; Typeface.BOLD) != <span class="number">0</span>) &#123;</span><br><span class="line">        paint.setFakeBoldText(<span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((fake &amp; Typeface.ITALIC) != <span class="number">0</span>) &#123;</span><br><span class="line">        paint.setTextSkewX(-<span class="number">0.25f</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    paint.setTypeface(tf);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/6612316/how-set-spannable-object-font-with-custom-font">How set Spannable object font with custom font</a></p>
+<h5 id="自定义字体可能导致的问题"><a href="#自定义字体可能导致的问题" class="headerlink" title="自定义字体可能导致的问题"></a>自定义字体可能导致的问题</h5><ol>
+<li>Ellipsizing might not work correctly if the font dosen’t have a glyph for ellipsis character（没有省略字符的话导致肾略效果失效）</li>
+<li>internationalization might not be supported（可能对国际化，多语言不支持）</li>
+<li>增加了apk的体积</li>
+</ol>
+<p>老版本的new TypeFace()会存在内存泄漏,此bug在Android 3.2上已fixed</p>
+<p>处理内存泄漏fix方案：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FontCache</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Hashtable&lt;String, Typeface&gt; fontCache = <span class="keyword">new</span> Hashtable&lt;String, Typeface&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Typeface <span class="title">get</span><span class="params">(String name, Context context)</span> </span>&#123;</span><br><span class="line">        Typeface tf = fontCache.get(name);</span><br><span class="line">        <span class="keyword">if</span>(tf == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                tf = Typeface.createFromAsset(context.getAssets(), name);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            fontCache.put(name, tf);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> tf;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/16901930/memory-leaks-with-custom-font-for-set-custom-font/16902532#16902532">http://stackoverflow.com/questions/16901930/memory-leaks-with-custom-font-for-set-custom-font/16902532#16902532</a><br><a target="_blank" rel="noopener" href="https://code.google.com/p/android/issues/detail?id=9904">https://code.google.com/p/android/issues/detail?id=9904</a>  </p>
+<h5 id="Typeface源码"><a href="#Typeface源码" class="headerlink" title="Typeface源码"></a>Typeface源码</h5><p>Typeface.create()方法返回的Typeface是存在缓存的</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Typeface <span class="title">create</span><span class="params">(String familyName, <span class="keyword">int</span> style)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (sSystemFontMap != <span class="keyword">null</span>) &#123;</span><br><span class="line">           <span class="keyword">return</span> create(sSystemFontMap.get(familyName), style);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">   &#125;<span class="function">orm</span></span><br><span class="line"><span class="function">   </span></span><br><span class="line"><span class="function">   <span class="keyword">public</span> <span class="keyword">static</span> Typeface <span class="title">create</span><span class="params">(Typeface family, <span class="keyword">int</span> style)</span> </span>&#123;</span><br><span class="line">   	 Typeface typeface;</span><br><span class="line">   	 <span class="comment">//private static final LongSparseArray&lt;SparseArray&lt;Typeface&gt;&gt; sTypefaceCache = new LongSparseArray&lt;SparseArray&lt;Typeface&gt;&gt;(3);</span></span><br><span class="line">       SparseArray&lt;Typeface&gt; styles = sTypefaceCache.get(ni);</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span> (styles != <span class="keyword">null</span>) &#123;</span><br><span class="line">           typeface = styles.get(style);</span><br><span class="line">           <span class="keyword">if</span> (typeface != <span class="keyword">null</span>) &#123;</span><br><span class="line">               <span class="keyword">return</span> typeface;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是<code>public static Typeface createFromAsset(AssetManager mgr, String path)</code>创建的Typeface好像不存在缓存，反正代码是没看懂</p>
+<p><a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/4320090/does-typeface-createfromasset-cache">Does Typeface.createFromAsset() cache?</a></p>
+<p>测试加载一个8M的字体文件耗时100ms,200kb的字体文件20ms</p>
+<h5 id="String-format-格式化时保留SpannableString-样式"><a href="#String-format-格式化时保留SpannableString-样式" class="headerlink" title="String.format()格式化时保留SpannableString 样式"></a>String.format()格式化时保留SpannableString 样式</h5><p>默认的情况下String.format()传入的SpannableString会当做普通的String处理，不会保留SpannableString中字体，样式等特性</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> George T. Steel</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpanFormatter</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Pattern FORMAT_SEQUENCE	= Pattern.compile(<span class="string">&quot;%([0-9]+\\$|&lt;?)([^a-zA-z%]*)([[a-zA-Z%]&amp;&amp;[^tT]]|[tT][a-zA-Z])&quot;</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">SpanFormatter</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SpannedString <span class="title">format</span><span class="params">(CharSequence format, Object... args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> format(Locale.getDefault(), format, args);</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SpannedString <span class="title">format</span><span class="params">(Locale locale, CharSequence format, Object... args)</span></span>&#123;</span><br><span class="line">		SpannableStringBuilder out = <span class="keyword">new</span> SpannableStringBuilder(format);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> argAt = -<span class="number">1</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">while</span> (i &lt; out.length())&#123;</span><br><span class="line">			Matcher m = FORMAT_SEQUENCE.matcher(out);</span><br><span class="line">			<span class="keyword">if</span> (!m.find(i)) <span class="keyword">break</span>;</span><br><span class="line">			i=m.start();</span><br><span class="line">			<span class="keyword">int</span> exprEnd = m.end();</span><br><span class="line">			</span><br><span class="line">			String argTerm = m.group(<span class="number">1</span>);</span><br><span class="line">			String modTerm = m.group(<span class="number">2</span>);</span><br><span class="line">			String typeTerm = m.group(<span class="number">3</span>);</span><br><span class="line">			</span><br><span class="line">			CharSequence cookedArg;</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">if</span> (typeTerm.equals(<span class="string">&quot;%&quot;</span>))&#123;</span><br><span class="line">				cookedArg = <span class="string">&quot;%&quot;</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span> (typeTerm.equals(<span class="string">&quot;n&quot;</span>))&#123;</span><br><span class="line">				cookedArg = <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				<span class="keyword">int</span> argIdx = <span class="number">0</span>;</span><br><span class="line">				<span class="keyword">if</span> (argTerm.equals(<span class="string">&quot;&quot;</span>)) argIdx = ++argAt;</span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span> (argTerm.equals(<span class="string">&quot;&lt;&quot;</span>)) argIdx = argAt;</span><br><span class="line">				<span class="keyword">else</span> argIdx = Integer.parseInt(argTerm.substring(<span class="number">0</span>, argTerm.length() - <span class="number">1</span>)) -<span class="number">1</span>;</span><br><span class="line">				</span><br><span class="line">				Object argItem = args[argIdx];</span><br><span class="line">				</span><br><span class="line">				<span class="keyword">if</span> (typeTerm.equals(<span class="string">&quot;s&quot;</span>) &amp;&amp; argItem <span class="keyword">instanceof</span> Spanned)&#123;</span><br><span class="line">					cookedArg = (Spanned) argItem;</span><br><span class="line">				&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">					cookedArg = String.format(locale, <span class="string">&quot;%&quot;</span>+modTerm+typeTerm, argItem);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">			out.replace(i, exprEnd, cookedArg);</span><br><span class="line">			i += cookedArg.length();</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> SpannedString(out);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参考</p>
+<p><a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/20936901/combining-spannable-with-string-format">Combining Spannable with String.format()</a><br><a target="_blank" rel="noopener" href="https://github.com/george-steel/android-utils/blob/master/src/org/oshkimaadziig/george/androidutils/SpanFormatter.java">a version of String.format</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/09/18/%E5%AE%9E%E7%8E%B0%E6%B8%90%E5%8F%98%E9%AB%98%E6%96%AF%E6%A8%A1%E7%B3%8A/" rel="prev" title="实现渐变高斯模糊">
+      <i class="fa fa-chevron-left"></i> 实现渐变高斯模糊
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/09/20/Typeface-createFromAsset-%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98%E4%BE%9D%E7%84%B6%E5%AD%98%E5%9C%A8/" rel="next" title="Typeface.createFromAsset 内存泄漏问题依然存在">
+      Typeface.createFromAsset 内存泄漏问题依然存在 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8Spannable%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">常用Spannable类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#setTypeface%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93"><span class="nav-number">2.</span> <span class="nav-text">setTypeface设置自定义字体</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CustomeTypefaceSpan%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93"><span class="nav-number">3.</span> <span class="nav-text">CustomeTypefaceSpan设置自定义字体</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93%E5%8F%AF%E8%83%BD%E5%AF%BC%E8%87%B4%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">自定义字体可能导致的问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Typeface%E6%BA%90%E7%A0%81"><span class="nav-number">5.</span> <span class="nav-text">Typeface源码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#String-format-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%97%B6%E4%BF%9D%E7%95%99SpannableString-%E6%A0%B7%E5%BC%8F"><span class="nav-number">6.</span> <span class="nav-text">String.format()格式化时保留SpannableString 样式</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yeshu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">138</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yeshu-cn" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yeshu-cn" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yeshu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
